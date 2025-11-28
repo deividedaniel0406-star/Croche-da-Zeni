@@ -1,4 +1,3 @@
-# Croche-da-Zeni
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -184,7 +183,7 @@
       font-size: 0.95rem;
     }
 
-    /* FORMULÁRIOS SIMPLES */
+    /* FORMULÁRIOS */
     .form-block {
       background: #fff;
       border-radius: 1rem;
@@ -379,6 +378,27 @@
       color: #555;
     }
 
+    /* TABELA PARTICIPANTES */
+    .tabela-participantes {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .tabela-participantes th,
+    .tabela-participantes td {
+      border: 1px solid #eee;
+      padding: 0.4rem 0.5rem;
+      text-align: left;
+    }
+
+    .tabela-participantes th {
+      background: #f9f1ff;
+      color: var(--escuro);
+      font-weight: 600;
+    }
+
     footer {
       text-align: center;
       padding: 1.5rem;
@@ -399,6 +419,10 @@
       }
       .numeros-grid {
         grid-template-columns: repeat(5, 1fr);
+      }
+      .tabela-participantes th,
+      .tabela-participantes td {
+        font-size: 0.78rem;
       }
     }
   </style>
@@ -476,7 +500,7 @@
     <h3>Rifas de Crochê</h3>
     <p class="section-subtitle">
       Aqui você cria as rifas: define o prêmio, o valor por número e acompanha os números escolhidos.
-      Os dados básicos da rifa ficam salvos neste aparelho.
+      Os dados ficam salvos neste aparelho para facilitar o controle.
     </p>
 
     <div class="form-block">
@@ -508,6 +532,18 @@
         </div>
       </div>
 
+      <!-- Dados do participante -->
+      <div class="form-grid">
+        <div>
+          <label for="nomeParticipante">Nome do participante</label>
+          <input type="text" id="nomeParticipante" placeholder="Nome completo">
+        </div>
+        <div>
+          <label for="contatoParticipante">Telefone / WhatsApp</label>
+          <input type="text" id="contatoParticipante" placeholder="Ex.: (69) 9XXXX-XXXX">
+        </div>
+      </div>
+
       <div class="numeros-grid" id="numerosGrid"></div>
 
       <p class="rifa-resumo">
@@ -517,7 +553,7 @@
         Total a pagar: <strong id="totalPagar">R$ 0,00</strong>
       </p>
 
-      <button class="btn-primary" id="btnConfirmar">Confirmar escolha</button>
+      <button class="btn-primary" id="btnConfirmar">Confirmar escolha e registrar</button>
 
       <div class="pix-box" id="pixBox" style="display:none;">
         <p><strong>Faça o Pix para confirmar sua participação:</strong></p>
@@ -545,6 +581,19 @@
           Enviar comprovante no WhatsApp
         </a>
       </div>
+
+      <h4 style="margin-top:1.2rem;">Participantes desta rifa</h4>
+      <p class="empty-msg" id="msgSemParticipantes">Nenhum número vendido ainda.</p>
+      <table class="tabela-participantes">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Contato</th>
+            <th>Números</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaParticipantes"></tbody>
+      </table>
     </div>
   </section>
 
@@ -724,9 +773,15 @@
   const pixNome = document.getElementById('pixNome');
   const pixBanco = document.getElementById('pixBanco');
 
+  const inputNomeParticipante = document.getElementById('nomeParticipante');
+  const inputContatoParticipante = document.getElementById('contatoParticipante');
+
+  const tabelaParticipantes = document.getElementById('tabelaParticipantes');
+  const msgSemParticipantes = document.getElementById('msgSemParticipantes');
+
   let valorPorNumero = 0;
-  const numerosReservados = new Set(); // se quiser, pode marcar manualmente aqui
-  const numerosSelecionados = new Set();
+  const numerosReservados = new Set();
+  let participantes = [];
 
   function carregarRifa() {
     const salvo = localStorage.getItem('rifaZeni');
@@ -747,6 +802,51 @@
   function salvarRifa(premio, valor) {
     localStorage.setItem('rifaZeni', JSON.stringify({ premio, valor }));
   }
+
+  function carregarParticipantes() {
+    const salvo = localStorage.getItem('rifaZeniParticipantes');
+    participantes = salvo ? JSON.parse(salvo) : [];
+    numerosReservados.clear();
+    participantes.forEach(p => {
+      (p.numeros || []).forEach(n => numerosReservados.add(Number(n)));
+    });
+    renderParticipantes();
+  }
+
+  function salvarParticipantes() {
+    localStorage.setItem('rifaZeniParticipantes', JSON.stringify(participantes));
+    numerosReservados.clear();
+    participantes.forEach(p => {
+      (p.numeros || []).forEach(n => numerosReservados.add(Number(n)));
+    });
+  }
+
+  function renderParticipantes() {
+    tabelaParticipantes.innerHTML = "";
+    if (participantes.length === 0) {
+      msgSemParticipantes.style.display = "block";
+      return;
+    }
+    msgSemParticipantes.style.display = "none";
+
+    participantes.forEach(p => {
+      const tr = document.createElement('tr');
+      const tdNome = document.createElement('td');
+      const tdContato = document.createElement('td');
+      const tdNumeros = document.createElement('td');
+
+      tdNome.textContent = p.nome;
+      tdContato.textContent = p.contato;
+      tdNumeros.textContent = (p.numeros || []).sort((a,b) => a - b).join(', ');
+
+      tr.appendChild(tdNome);
+      tr.appendChild(tdContato);
+      tr.appendChild(tdNumeros);
+      tabelaParticipantes.appendChild(tr);
+    });
+  }
+
+  const numerosSelecionados = new Set();
 
   function gerarBotoesRifa() {
     numerosGrid.innerHTML = "";
@@ -819,40 +919,73 @@
       alert('Selecione pelo menos um número para participar da rifa.');
       return;
     }
+
+    const nome = inputNomeParticipante.value.trim();
+    const contato = inputContatoParticipante.value.trim();
+
+    if (!nome || !contato) {
+      alert('Preencha nome e telefone/WhatsApp do participante.');
+      return;
+    }
+
     const lista = Array.from(numerosSelecionados).sort((a, b) => a - b);
     const total = lista.length * valorPorNumero;
 
+    // registra participante
+    participantes.push({
+      nome,
+      contato,
+      numeros: lista
+    });
+    salvarParticipantes();
+
+    // marca números como reservados
+    lista.forEach(n => numerosReservados.add(n));
+
+    // atualiza grade e clean seleção
+    numerosSelecionados.clear();
+    gerarBotoesRifa();
+    atualizarResumoRifa();
+    renderParticipantes();
+
+    // mostra caixa de Pix
     valorPixTexto.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
     numerosPixTexto.textContent = lista.join(', ');
     pixBox.style.display = 'block';
 
     const mensagem =
       `Olá, Zeni! Acabei de participar da rifa do crochê.%0A%0A` +
+      `Nome: ${nome}%0A` +
+      `Contato: ${contato}%0A` +
       `Números escolhidos: ${lista.join(', ')}%0A` +
       `Valor pago: R$ ${total.toFixed(2).replace('.', ',')}%0A` +
       `Fiz o Pix para a chave ${pixKey} (${pixName}, ${pixBank}).%0A` +
       `Por favor, confira e confirme meus números. Obrigado(a)!`;
 
     btnWhatsappComprovante.href = `https://wa.me/${whatsappBase}?text=${mensagem}`;
+
+    // limpa campos de nome/contato
+    inputNomeParticipante.value = "";
+    inputContatoParticipante.value = "";
   });
 
   // Botão de copiar Pix
   btnCopiarPix.addEventListener('click', () => {
     const texto = chavePixInput.value;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(texto).then(() => {
-        btnCopiarPix.textContent = "Copiado!";
-        setTimeout(() => btnCopiarPix.textContent = "Copiar Pix", 1500);
-      }).catch(fallbackCopy);
-    } else {
-      fallbackCopy();
-    }
-
-    function fallbackCopy() {
-      chavePixInput.select();
-      document.execCommand('copy');
+    function ok() {
       btnCopiarPix.textContent = "Copiado!";
       setTimeout(() => btnCopiarPix.textContent = "Copiar Pix", 1500);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(texto).then(ok).catch(() => {
+        chavePixInput.select();
+        document.execCommand('copy');
+        ok();
+      });
+    } else {
+      chavePixInput.select();
+      document.execCommand('copy');
+      ok();
     }
   });
 
@@ -864,9 +997,11 @@
 
   // Inicialização
   carregarCatalogo();
-  gerarBotoesRifa();
   carregarRifa();
+  carregarParticipantes();
+  gerarBotoesRifa();
 </script>
 
 </body>
 </html>
+
