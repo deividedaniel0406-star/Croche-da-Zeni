@@ -1,0 +1,872 @@
+# Croche-da-Zeni
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Crochê da Zeni</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --roxo: #7b2cbf;
+      --rosa: #f7cad0;
+      --creme: #fff5e6;
+      --escuro: #33272a;
+      --verde: #51a35b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #fffaf5;
+      color: var(--escuro);
+      line-height: 1.6;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid #f0dede;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      color: var(--roxo);
+    }
+
+    nav a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: var(--escuro);
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: var(--roxo);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* HERO */
+    #hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+      padding: 2.5rem 0;
+    }
+
+    #hero-text h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--roxo);
+    }
+
+    #hero-text p {
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--rosa);
+      color: var(--escuro);
+      padding: 0.2rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .btn-primary, .btn-secondary, .btn-small, .btn-danger {
+      display: inline-block;
+      padding: 0.7rem 1.2rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      margin-right: 0.7rem;
+      margin-top: 0.5rem;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--roxo);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--roxo);
+      border: 1px solid var(--roxo);
+    }
+
+    .btn-secondary:hover {
+      background: var(--rosa);
+    }
+
+    .btn-small {
+      padding: 0.4rem 0.9rem;
+      font-size: 0.85rem;
+      background: var(--verde);
+      color: #fff;
+    }
+
+    .btn-small:hover {
+      opacity: 0.9;
+    }
+
+    .btn-danger {
+      padding: 0.4rem 0.9rem;
+      font-size: 0.8rem;
+      background: #c0392b;
+      color: #fff;
+      margin-top: 0;
+      margin-right: 0.4rem;
+    }
+
+    .btn-danger:hover {
+      opacity: 0.9;
+    }
+
+    #hero-img {
+      background: linear-gradient(135deg, var(--creme), var(--rosa));
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+
+    #hero-img img {
+      max-width: 100%;
+      border-radius: 1rem;
+      object-fit: cover;
+    }
+
+    #hero-img p {
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    /* SEÇÕES */
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    section h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.8rem;
+      color: var(--roxo);
+    }
+
+    section p.section-subtitle {
+      margin-bottom: 1rem;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    /* FORMULÁRIOS SIMPLES */
+    .form-block {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+      margin-bottom: 1rem;
+    }
+
+    .form-block h4 {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      color: var(--escuro);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+      align-items: end;
+    }
+
+    label {
+      font-size: 0.85rem;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="url"],
+    textarea {
+      width: 100%;
+      padding: 0.45rem 0.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ddd;
+      font-size: 0.9rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    /* CATÁLOGO */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 0.8rem;
+      margin-bottom: 0.6rem;
+      object-fit: cover;
+      max-height: 180px;
+    }
+
+    .card h4 {
+      font-size: 1.05rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .price {
+      font-weight: 700;
+      color: var(--roxo);
+      margin-top: 0.4rem;
+    }
+
+    .card-actions {
+      margin-top: 0.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      align-items: center;
+    }
+
+    .empty-msg {
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 0.5rem;
+    }
+
+    /* RIFA */
+    .rifa-card {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1.2rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+    }
+
+    .rifa-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+
+    .rifa-info p {
+      font-size: 0.92rem;
+    }
+
+    .rifa-info .valor-rifa {
+      font-weight: 700;
+      color: var(--roxo);
+      margin-top: 0.2rem;
+    }
+
+    .numeros-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 0.4rem;
+      margin: 1rem 0;
+    }
+
+    .numero-btn {
+      border: 1px solid #ddd;
+      border-radius: 0.5rem;
+      padding: 0.3rem 0;
+      font-size: 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      background: #fff;
+    }
+
+    .numero-btn.selecionado {
+      background: var(--roxo);
+      color: #fff;
+      border-color: var(--roxo);
+    }
+
+    .numero-btn.reservado {
+      background: #ccc;
+      color: #666;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
+    .rifa-resumo {
+      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .rifa-resumo strong {
+      color: var(--escuro);
+    }
+
+    .pix-box {
+      background: var(--creme);
+      border-radius: 0.8rem;
+      padding: 0.8rem;
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    .pix-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.3rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .pix-row input {
+      flex: 1;
+      padding: 0.45rem 0.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ddd;
+      font-size: 0.9rem;
+      background: #fff;
+    }
+
+    .pix-label {
+      font-size: 0.85rem;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.85rem;
+      color: #777;
+      border-top: 1px solid #f0dede;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      #hero {
+        grid-template-columns: 1fr;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+      .numeros-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Crochê da Zeni</h1>
+  <nav>
+    <a href="#hero">Início</a>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#rifas">Rifas</a>
+    <a href="#contato">Contato</a>
+  </nav>
+</header>
+
+<main class="container">
+  <!-- HERO -->
+  <section id="hero">
+    <div id="hero-text">
+      <span class="badge">Crochê feito por uma mulher guerreira</span>
+      <h2>Arte em crochê que carrega carinho e história</h2>
+      <p>No Crochê da Zeni, cada ponto é feito com amor, paciência e fé. Tapetes, caminhos de mesa e peças especiais que deixam qualquer lar mais acolhedor.</p>
+      <p>Veja as peças disponíveis, participe das rifas e apoie o trabalho de uma artesã que não desiste dos seus sonhos.</p>
+      <a href="#catalogo" class="btn-primary">Ver catálogo</a>
+      <a href="#rifas" class="btn-secondary">Participar da rifa</a>
+    </div>
+    <div id="hero-img">
+      <img src="https://images.pexels.com/photos/3945632/pexels-photo-3945632.jpeg"
+           alt="Mulher fazendo crochê com barbantes coloridos">
+      <p>Imagem ilustrativa – você pode colocar aqui uma foto da Zeni ou do cantinho do crochê.</p>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <section id="catalogo">
+    <h3>Catálogo de Peças</h3>
+    <p class="section-subtitle">
+      O catálogo começa vazio. Você pode ir cadastrando as peças prontas: tapetes, jogos de cozinha, caminhos de mesa, etc.
+    </p>
+
+    <div class="form-block">
+      <h4 id="tituloFormCatalogo">Adicionar nova peça ao catálogo</h4>
+      <form id="formCatalogo">
+        <div class="form-grid">
+          <div>
+            <label for="nomePeca">Nome da peça</label>
+            <input type="text" id="nomePeca" placeholder="Ex.: Tapete Oval Floral" required>
+          </div>
+          <div>
+            <label for="descricaoPeca">Descrição</label>
+            <textarea id="descricaoPeca" placeholder="Tamanho, cores, detalhes..." required></textarea>
+          </div>
+          <div>
+            <label for="precoPeca">Preço (R$)</label>
+            <input type="number" id="precoPeca" min="0" step="0.01" placeholder="Ex.: 120,00" required>
+          </div>
+          <div>
+            <label for="imagemPeca">Link da imagem (URL)</label>
+            <input type="url" id="imagemPeca" placeholder="Cole aqui o link da foto da peça (opcional)">
+          </div>
+          <div>
+            <button type="submit" class="btn-small">Salvar peça</button>
+          </div>
+        </div>
+      </form>
+      <p class="empty-msg" id="msgCatalogoVazio">Nenhuma peça cadastrada ainda. Preencha os campos acima e clique em “Salvar peça”.</p>
+    </div>
+
+    <div class="grid" id="catalogoGrid"></div>
+  </section>
+
+  <!-- RIFAS -->
+  <section id="rifas">
+    <h3>Rifas de Crochê</h3>
+    <p class="section-subtitle">
+      Aqui você cria as rifas: define o prêmio, o valor por número e acompanha os números escolhidos.
+      Os dados básicos da rifa ficam salvos neste aparelho.
+    </p>
+
+    <div class="form-block">
+      <h4>Configurar rifa atual</h4>
+      <form id="formRifa">
+        <div class="form-grid">
+          <div>
+            <label for="premioRifa">Prêmio da rifa</label>
+            <input type="text" id="premioRifa" placeholder="Ex.: Tapete grande para sala" required>
+          </div>
+          <div>
+            <label for="valorNumeroRifa">Valor por número (R$)</label>
+            <input type="number" id="valorNumeroRifa" min="0" step="0.01" placeholder="Ex.: 3,00" required>
+          </div>
+          <div>
+            <button type="submit" class="btn-small">Salvar rifa</button>
+          </div>
+        </div>
+      </form>
+      <p class="empty-msg" id="msgRifaVazia">Ainda não há rifa configurada. Preencha os dados acima e clique em “Salvar rifa”.</p>
+    </div>
+
+    <div class="rifa-card" id="rifaCard" style="display:none;">
+      <div class="rifa-header">
+        <div class="rifa-info">
+          <p>Prêmio: <span id="textoPremioRifa"></span></p>
+          <p class="valor-rifa">Valor por número: <span id="valorPorNumero"></span></p>
+          <p>Total de números: 1 a 100</p>
+        </div>
+      </div>
+
+      <div class="numeros-grid" id="numerosGrid"></div>
+
+      <p class="rifa-resumo">
+        Números selecionados: <strong id="numerosSelecionados">nenhum</strong>
+      </p>
+      <p class="rifa-resumo">
+        Total a pagar: <strong id="totalPagar">R$ 0,00</strong>
+      </p>
+
+      <button class="btn-primary" id="btnConfirmar">Confirmar escolha</button>
+
+      <div class="pix-box" id="pixBox" style="display:none;">
+        <p><strong>Faça o Pix para confirmar sua participação:</strong></p>
+        <p>Chave Pix (celular):</p>
+        <div class="pix-row">
+          <input type="text" id="chavePixInput" readonly>
+          <button type="button" class="btn-small" id="btnCopiarPix">Copiar Pix</button>
+        </div>
+        <p class="pix-label" id="pixNome"></p>
+        <p class="pix-label" id="pixBanco"></p>
+
+        <p style="margin-top:0.6rem;">
+          Valor: <span id="valorPixTexto"></span><br>
+          Números escolhidos: <span id="numerosPixTexto"></span>
+        </p>
+        <p style="margin-top:0.4rem;">
+          Depois de pagar o Pix, clique no botão abaixo para enviar o comprovante pelo WhatsApp.  
+          A mensagem já vai pronta, com seus números e o valor:
+        </p>
+        <a id="btnWhatsappComprovante"
+           href="#"
+           target="_blank"
+           class="btn-secondary"
+           style="margin-top:0.4rem; display:inline-block;">
+          Enviar comprovante no WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <h3>Contato</h3>
+    <p class="section-subtitle">
+      Quer encomendar uma peça exclusiva, tirar dúvidas sobre as rifas ou combinar um modelo especial?
+    </p>
+    <p><strong>WhatsApp:</strong> (69) 99385-0180</p>
+    <p>
+      <a
+        href="https://wa.me/5569993850180?text=Ol%C3%A1%2C%20Zeni!%20Acessei%20o%20site%20Croch%C3%AA%20da%20Zeni%20e%20gostaria%20de%20conversar%20sobre%20as%20pe%C3%A7as%20de%20croch%C3%AA%20e%20as%20rifas.%20Pode%20me%20ajudar%3F"
+        target="_blank"
+        class="btn-primary">
+        Falar com a Zeni no WhatsApp
+      </a>
+    </p>
+    <p><strong>Mensagem automática:</strong><br>
+      “Olá, Zeni! Acessei o site Crochê da Zeni e gostaria de conversar sobre as peças de crochê e as rifas. Pode me ajudar?”
+    </p>
+  </section>
+</main>
+
+<footer>
+  © <span id="anoAtual"></span> Crochê da Zeni – Todos os direitos reservados.
+</footer>
+
+<script>
+  // CONFIGURAÇÕES GERAIS
+  const whatsappBase = "5569993850180";
+  const pixKey  = "69 99977-1852";
+  const pixName = "Deivide Daniel Correia Ragnel";
+  const pixBank = "Banco Mercado Pago";
+
+  // ===== CATÁLOGO =====
+  const formCatalogo = document.getElementById('formCatalogo');
+  const catalogoGrid = document.getElementById('catalogoGrid');
+  const msgCatalogoVazio = document.getElementById('msgCatalogoVazio');
+  const tituloFormCatalogo = document.getElementById('tituloFormCatalogo');
+
+  let catalogo = [];
+  let indiceEdicao = null;
+
+  function carregarCatalogo() {
+    const salvo = localStorage.getItem('catalogoZeni');
+    catalogo = salvo ? JSON.parse(salvo) : [];
+    renderCatalogo();
+  }
+
+  function salvarCatalogo() {
+    localStorage.setItem('catalogoZeni', JSON.stringify(catalogo));
+  }
+
+  function renderCatalogo() {
+    catalogoGrid.innerHTML = "";
+    if (catalogo.length === 0) {
+      msgCatalogoVazio.style.display = "block";
+      return;
+    }
+    msgCatalogoVazio.style.display = "none";
+
+    catalogo.forEach((item, index) => {
+      const card = document.createElement('div');
+      card.classList.add('card');
+
+      if (item.imagem) {
+        const img = document.createElement('img');
+        img.src = item.imagem;
+        img.alt = item.nome;
+        card.appendChild(img);
+      }
+
+      const title = document.createElement('h4');
+      title.textContent = item.nome;
+      card.appendChild(title);
+
+      const desc = document.createElement('p');
+      desc.textContent = item.descricao;
+      card.appendChild(desc);
+
+      const price = document.createElement('p');
+      price.classList.add('price');
+      price.textContent = `R$ ${item.preco.toFixed(2).replace('.', ',')}`;
+      card.appendChild(price);
+
+      const actions = document.createElement('div');
+      actions.classList.add('card-actions');
+
+      const btnEditar = document.createElement('button');
+      btnEditar.textContent = "Editar";
+      btnEditar.className = "btn-small";
+      btnEditar.addEventListener('click', () => {
+        indiceEdicao = index;
+        tituloFormCatalogo.textContent = "Editar peça do catálogo";
+        document.getElementById('nomePeca').value = item.nome;
+        document.getElementById('descricaoPeca').value = item.descricao;
+        document.getElementById('precoPeca').value = item.preco;
+        document.getElementById('imagemPeca').value = item.imagem || "";
+        window.scrollTo({ top: formCatalogo.offsetTop - 80, behavior: 'smooth' });
+      });
+      actions.appendChild(btnEditar);
+
+      const btnExcluir = document.createElement('button');
+      btnExcluir.textContent = "Excluir";
+      btnExcluir.className = "btn-danger";
+      btnExcluir.addEventListener('click', () => {
+        if (confirm(`Você deseja mesmo excluir a peça "${item.nome}"?`)) {
+          catalogo.splice(index, 1);
+          salvarCatalogo();
+          renderCatalogo();
+        }
+      });
+      actions.appendChild(btnExcluir);
+
+      const link = document.createElement('a');
+      const msg = `Olá, Zeni! Vi a peça "${item.nome}" no site Crochê da Zeni e gostaria de saber se ela ainda está disponível.`;
+      const url = `https://wa.me/${whatsappBase}?text=${encodeURIComponent(msg)}`;
+      link.href = url;
+      link.target = "_blank";
+      link.className = "btn-secondary";
+      link.textContent = "Pedir pelo WhatsApp";
+      actions.appendChild(link);
+
+      card.appendChild(actions);
+      catalogoGrid.appendChild(card);
+    });
+  }
+
+  formCatalogo.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nome = document.getElementById('nomePeca').value.trim();
+    const descricao = document.getElementById('descricaoPeca').value.trim();
+    const precoRaw = document.getElementById('precoPeca').value;
+    const imagem = document.getElementById('imagemPeca').value.trim();
+
+    const preco = parseFloat(precoRaw.replace(',', '.'));
+
+    if (!nome || !descricao || isNaN(preco)) {
+      alert('Preencha nome, descrição e preço corretamente.');
+      return;
+    }
+
+    const novaPeca = { nome, descricao, preco, imagem };
+
+    if (indiceEdicao === null) {
+      catalogo.push(novaPeca);
+    } else {
+      catalogo[indiceEdicao] = novaPeca;
+      indiceEdicao = null;
+      tituloFormCatalogo.textContent = "Adicionar nova peça ao catálogo";
+    }
+
+    salvarCatalogo();
+    renderCatalogo();
+    formCatalogo.reset();
+  });
+
+  // ===== RIFA =====
+  const formRifa = document.getElementById('formRifa');
+  const msgRifaVazia = document.getElementById('msgRifaVazia');
+  const rifaCard = document.getElementById('rifaCard');
+  const textoPremioRifa = document.getElementById('textoPremioRifa');
+  const spanValorPorNumero = document.getElementById('valorPorNumero');
+
+  const numerosGrid = document.getElementById('numerosGrid');
+  const spanNumerosSelecionados = document.getElementById('numerosSelecionados');
+  const spanTotalPagar = document.getElementById('totalPagar');
+  const btnConfirmar = document.getElementById('btnConfirmar');
+  const pixBox = document.getElementById('pixBox');
+  const valorPixTexto = document.getElementById('valorPixTexto');
+  const numerosPixTexto = document.getElementById('numerosPixTexto');
+  const btnWhatsappComprovante = document.getElementById('btnWhatsappComprovante');
+
+  const chavePixInput = document.getElementById('chavePixInput');
+  const btnCopiarPix = document.getElementById('btnCopiarPix');
+  const pixNome = document.getElementById('pixNome');
+  const pixBanco = document.getElementById('pixBanco');
+
+  let valorPorNumero = 0;
+  const numerosReservados = new Set(); // se quiser, pode marcar manualmente aqui
+  const numerosSelecionados = new Set();
+
+  function carregarRifa() {
+    const salvo = localStorage.getItem('rifaZeni');
+    if (salvo) {
+      const rifa = JSON.parse(salvo);
+      if (rifa && rifa.premio && rifa.valor) {
+        document.getElementById('premioRifa').value = rifa.premio;
+        document.getElementById('valorNumeroRifa').value = rifa.valor;
+        textoPremioRifa.textContent = rifa.premio;
+        valorPorNumero = rifa.valor;
+        spanValorPorNumero.textContent = `R$ ${valorPorNumero.toFixed(2).replace('.', ',')}`;
+        msgRifaVazia.style.display = "none";
+        rifaCard.style.display = "block";
+      }
+    }
+  }
+
+  function salvarRifa(premio, valor) {
+    localStorage.setItem('rifaZeni', JSON.stringify({ premio, valor }));
+  }
+
+  function gerarBotoesRifa() {
+    numerosGrid.innerHTML = "";
+    for (let i = 1; i <= 100; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      btn.classList.add('numero-btn');
+      btn.dataset.numero = i;
+
+      if (numerosReservados.has(i)) {
+        btn.classList.add('reservado');
+        btn.disabled = true;
+      }
+
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('reservado') || valorPorNumero <= 0) return;
+
+        const numero = Number(btn.dataset.numero);
+        if (btn.classList.contains('selecionado')) {
+          btn.classList.remove('selecionado');
+          numerosSelecionados.delete(numero);
+        } else {
+          btn.classList.add('selecionado');
+          numerosSelecionados.add(numero);
+        }
+        atualizarResumoRifa();
+      });
+
+      numerosGrid.appendChild(btn);
+    }
+  }
+
+  function atualizarResumoRifa() {
+    const lista = Array.from(numerosSelecionados).sort((a, b) => a - b);
+    spanNumerosSelecionados.textContent = lista.length ? lista.join(', ') : 'nenhum';
+
+    const total = lista.length * valorPorNumero;
+    spanTotalPagar.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+  }
+
+  formRifa.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const premio = document.getElementById('premioRifa').value.trim();
+    const valorRaw = document.getElementById('valorNumeroRifa').value;
+
+    const valor = parseFloat(valorRaw.replace(',', '.'));
+
+    if (!premio || isNaN(valor) || valor <= 0) {
+      alert('Preencha o prêmio e o valor por número corretamente.');
+      return;
+    }
+
+    textoPremioRifa.textContent = premio;
+    valorPorNumero = valor;
+    spanValorPorNumero.textContent = `R$ ${valorPorNumero.toFixed(2).replace('.', ',')}`;
+
+    msgRifaVazia.style.display = "none";
+    rifaCard.style.display = "block";
+
+    salvarRifa(premio, valor);
+    atualizarResumoRifa();
+  });
+
+  btnConfirmar.addEventListener('click', () => {
+    if (valorPorNumero <= 0) {
+      alert('Antes de tudo, configure o prêmio e o valor da rifa.');
+      return;
+    }
+    if (numerosSelecionados.size === 0) {
+      alert('Selecione pelo menos um número para participar da rifa.');
+      return;
+    }
+    const lista = Array.from(numerosSelecionados).sort((a, b) => a - b);
+    const total = lista.length * valorPorNumero;
+
+    valorPixTexto.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    numerosPixTexto.textContent = lista.join(', ');
+    pixBox.style.display = 'block';
+
+    const mensagem =
+      `Olá, Zeni! Acabei de participar da rifa do crochê.%0A%0A` +
+      `Números escolhidos: ${lista.join(', ')}%0A` +
+      `Valor pago: R$ ${total.toFixed(2).replace('.', ',')}%0A` +
+      `Fiz o Pix para a chave ${pixKey} (${pixName}, ${pixBank}).%0A` +
+      `Por favor, confira e confirme meus números. Obrigado(a)!`;
+
+    btnWhatsappComprovante.href = `https://wa.me/${whatsappBase}?text=${mensagem}`;
+  });
+
+  // Botão de copiar Pix
+  btnCopiarPix.addEventListener('click', () => {
+    const texto = chavePixInput.value;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(texto).then(() => {
+        btnCopiarPix.textContent = "Copiado!";
+        setTimeout(() => btnCopiarPix.textContent = "Copiar Pix", 1500);
+      }).catch(fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
+
+    function fallbackCopy() {
+      chavePixInput.select();
+      document.execCommand('copy');
+      btnCopiarPix.textContent = "Copiado!";
+      setTimeout(() => btnCopiarPix.textContent = "Copiar Pix", 1500);
+    }
+  });
+
+  // Ano no rodapé + preenchimento dos dados de Pix
+  document.getElementById('anoAtual').textContent = new Date().getFullYear();
+  chavePixInput.value = pixKey;
+  pixNome.textContent  = `Favorecido: ${pixName}`;
+  pixBanco.textContent = `Banco: ${pixBank}`;
+
+  // Inicialização
+  carregarCatalogo();
+  gerarBotoesRifa();
+  carregarRifa();
+</script>
+
+</body>
+</html>
