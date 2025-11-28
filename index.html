@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <title>Crochê da Zeni</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
     :root {
       --roxo: #7b2cbf;
+      --roxo-escuro: #5a189a;
       --rosa: #f7cad0;
       --creme: #fff5e6;
+      --creme-forte: #ffe0b2;
       --escuro: #33272a;
-      --verde: #51a35b;
+      --verde: #4caf50;
+      --fundo-gradiente: linear-gradient(135deg, #fff5f8, #ffe9d6);
     }
 
     * {
@@ -21,26 +25,34 @@
     }
 
     body {
-      background: #fffaf5;
+      background: var(--fundo-gradiente);
       color: var(--escuro);
       line-height: 1.6;
     }
 
     header {
-      background: white;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid #f0dede;
-      padding: 1rem 2rem;
+      padding: 0.7rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
     }
 
     header h1 {
-      font-size: 1.5rem;
-      color: var(--roxo);
+      font-size: 1.4rem;
+      color: var(--roxo-escuro);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    header h1 span {
+      font-size: 1.2rem;
     }
 
     nav a {
@@ -48,6 +60,7 @@
       text-decoration: none;
       color: var(--escuro);
       font-weight: 500;
+      font-size: 0.95rem;
     }
 
     nav a:hover {
@@ -60,36 +73,28 @@
       padding: 1.5rem;
     }
 
-    /* HERO */
-    #hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 2rem;
+    .linha-top {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      padding: 2.5rem 0;
+      margin-bottom: 0.5rem;
     }
 
-    #hero-text h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: var(--roxo);
-    }
-
-    #hero-text p {
-      margin-bottom: 1rem;
-      font-size: 1.05rem;
-    }
-
-    .badge {
-      display: inline-block;
-      background: var(--rosa);
-      color: var(--escuro);
-      padding: 0.2rem 0.8rem;
+    .btn-admin-header {
       border-radius: 999px;
+      border: 1px dashed var(--roxo-escuro);
+      background: #fff;
+      color: var(--roxo-escuro);
       font-size: 0.8rem;
-      margin-bottom: 0.8rem;
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
     }
 
+    .btn-admin-header:hover {
+      background: var(--rosa);
+    }
+
+    /* BOTÕES GERAIS */
     .btn-primary, .btn-secondary, .btn-small, .btn-danger {
       display: inline-block;
       padding: 0.7rem 1.2rem;
@@ -101,21 +106,25 @@
       margin-top: 0.5rem;
       text-decoration: none;
       text-align: center;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
     }
 
     .btn-primary {
       background: var(--roxo);
       color: #fff;
+      box-shadow: 0 4px 12px rgba(123,44,191,0.4);
     }
 
     .btn-primary:hover {
-      opacity: 0.9;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(123,44,191,0.5);
+      background: var(--roxo-escuro);
     }
 
     .btn-secondary {
       background: #fff;
-      color: var(--roxo);
-      border: 1px solid var(--roxo);
+      color: var(--roxo-escuro);
+      border: 1px solid var(--roxo-escuro);
     }
 
     .btn-secondary:hover {
@@ -127,10 +136,12 @@
       font-size: 0.85rem;
       background: var(--verde);
       color: #fff;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
     }
 
     .btn-small:hover {
-      opacity: 0.9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
     .btn-danger {
@@ -138,25 +149,87 @@
       font-size: 0.8rem;
       background: #c0392b;
       color: #fff;
-      margin-top: 0;
-      margin-right: 0.4rem;
     }
 
     .btn-danger:hover {
-      opacity: 0.9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(192,57,43,0.5);
+    }
+
+    /* HERO */
+    #hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+      padding: 2.5rem 0 2rem;
+    }
+
+    #hero-text h2 {
+      font-size: 2.1rem;
+      margin-bottom: 1rem;
+      color: var(--roxo-escuro);
+    }
+
+    #hero-text p {
+      margin-bottom: 1rem;
+      font-size: 1.03rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--creme-forte);
+      color: var(--escuro);
+      padding: 0.25rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      margin-bottom: 0.8rem;
+      border: 1px solid rgba(255, 193, 140, 0.8);
+    }
+
+    .destaque-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      font-size: 0.9rem;
+      margin-top: 0.6rem;
+      color: #555;
+    }
+
+    .pill {
+      background: rgba(255,255,255,0.9);
+      border-radius: 999px;
+      padding: 0.25rem 0.8rem;
+      border: 1px solid #f0dede;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.85rem;
     }
 
     #hero-img {
-      background: linear-gradient(135deg, var(--creme), var(--rosa));
+      background: linear-gradient(145deg, #ffffff, #ffe3f0);
       border-radius: 1.5rem;
       padding: 1.5rem;
       text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero-img::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(123,44,191,0.15), transparent 60%);
+      top: -40px;
+      right: -40px;
     }
 
     #hero-img img {
       max-width: 100%;
-      border-radius: 1rem;
+      border-radius: 1.2rem;
       object-fit: cover;
     }
 
@@ -173,8 +246,11 @@
 
     section h3 {
       font-size: 1.5rem;
-      margin-bottom: 0.8rem;
-      color: var(--roxo);
+      margin-bottom: 0.3rem;
+      color: var(--roxo-escuro);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
     section p.section-subtitle {
@@ -183,19 +259,27 @@
       font-size: 0.95rem;
     }
 
-    /* FORMULÁRIOS */
+    /* BLOCO / FORM */
     .form-block {
-      background: #fff;
+      background: rgba(255,255,255,0.98);
       border-radius: 1rem;
       padding: 1rem;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.06);
       margin-bottom: 1rem;
+      border: 1px solid rgba(255,255,255,0.6);
     }
 
     .form-block h4 {
       margin-bottom: 0.5rem;
       font-size: 1rem;
       color: var(--escuro);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .form-block h4 span {
+      font-size: 1.1rem;
     }
 
     .form-grid {
@@ -221,6 +305,7 @@
       border-radius: 0.5rem;
       border: 1px solid #ddd;
       font-size: 0.9rem;
+      background: #fff;
     }
 
     textarea {
@@ -229,6 +314,14 @@
     }
 
     /* CATÁLOGO */
+    .caixa-section {
+      background: rgba(255,255,255,0.92);
+      border-radius: 1.2rem;
+      padding: 1.1rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+      border: 1px solid rgba(255,255,255,0.7);
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -243,6 +336,19 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      border: 1px solid #f2d9ff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle, rgba(123,44,191,0.1), transparent 60%);
+      top: -20px;
+      right: -20px;
     }
 
     .card img {
@@ -256,6 +362,7 @@
     .card h4 {
       font-size: 1.05rem;
       margin-bottom: 0.3rem;
+      color: var(--roxo-escuro);
     }
 
     .card p {
@@ -275,6 +382,19 @@
       flex-wrap: wrap;
       gap: 0.3rem;
       align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tag-disponivel {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+      display: inline-block;
+      margin-top: 0.2rem;
     }
 
     .empty-msg {
@@ -289,6 +409,7 @@
       border-radius: 1rem;
       padding: 1.2rem;
       box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      border: 1px solid #ffe0f0;
     }
 
     .rifa-header {
@@ -297,6 +418,7 @@
       gap: 1rem;
       margin-bottom: 1rem;
       align-items: center;
+      justify-content: space-between;
     }
 
     .rifa-info p {
@@ -307,6 +429,15 @@
       font-weight: 700;
       color: var(--roxo);
       margin-top: 0.2rem;
+    }
+
+    .badge-rifa {
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: #fff3cd;
+      color: #856404;
+      font-size: 0.75rem;
+      border: 1px solid #ffeeba;
     }
 
     .numeros-grid {
@@ -324,19 +455,28 @@
       text-align: center;
       cursor: pointer;
       background: #fff;
+      transition: background 0.15s ease, transform 0.05s ease, box-shadow 0.1s ease;
+    }
+
+    .numero-btn:hover {
+      background: #f3e5f5;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
 
     .numero-btn.selecionado {
       background: var(--roxo);
       color: #fff;
       border-color: var(--roxo);
+      box-shadow: 0 2px 8px rgba(123,44,191,0.5);
+      transform: translateY(-1px);
     }
 
     .numero-btn.reservado {
-      background: #ccc;
+      background: #e0e0e0;
       color: #666;
       cursor: not-allowed;
       text-decoration: line-through;
+      box-shadow: none;
     }
 
     .rifa-resumo {
@@ -354,6 +494,7 @@
       padding: 0.8rem;
       font-size: 0.9rem;
       margin-top: 0.8rem;
+      border: 1px solid #ffd8a6;
     }
 
     .pix-row {
@@ -378,12 +519,13 @@
       color: #555;
     }
 
-    /* TABELA PARTICIPANTES */
+    /* PARTICIPANTES */
     .tabela-participantes {
       width: 100%;
       border-collapse: collapse;
       margin-top: 1rem;
       font-size: 0.85rem;
+      background: #fffdf9;
     }
 
     .tabela-participantes th,
@@ -399,6 +541,44 @@
       font-weight: 600;
     }
 
+    /* SORTEIO */
+    .card-sorteio {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+      border: 1px solid #e1bee7;
+    }
+
+    .resultado-sorteio {
+      margin-top: 0.8rem;
+      padding: 0.8rem;
+      border-radius: 0.8rem;
+      background: #f3e5f5;
+      border: 1px solid #e1bee7;
+    }
+
+    .resultado-sorteio h4 {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      color: var(--roxo-escuro);
+    }
+
+    .resultado-sorteio p {
+      font-size: 0.9rem;
+    }
+
+    .badge-status {
+      font-size: 0.78rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: #e3f2fd;
+      color: #1565c0;
+      border: 1px solid #bbdefb;
+      display: inline-block;
+      margin-bottom: 0.4rem;
+    }
+
     footer {
       text-align: center;
       padding: 1.5rem;
@@ -406,6 +586,18 @@
       color: #777;
       border-top: 1px solid #f0dede;
       margin-top: 2rem;
+      background: rgba(255,255,255,0.9);
+    }
+
+    .admin-indicador {
+      font-size: 0.8rem;
+      color: #2e7d32;
+      margin-top: 0.2rem;
+      display: none;
+    }
+
+    .admin-indicador.mostrar {
+      display: inline-block;
     }
 
     @media (max-width: 768px) {
@@ -415,7 +607,7 @@
       header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.5rem;
+        gap: 0.4rem;
       }
       .numeros-grid {
         grid-template-columns: repeat(5, 1fr);
@@ -427,179 +619,238 @@
     }
   </style>
 </head>
+
 <body>
 
 <header>
-  <h1>Crochê da Zeni</h1>
+  <h1><span>🧶</span>Crochê da Zeni</h1>
   <nav>
     <a href="#hero">Início</a>
     <a href="#catalogo">Catálogo</a>
     <a href="#rifas">Rifas</a>
+    <a href="#sorteio">Sorteio</a>
     <a href="#contato">Contato</a>
   </nav>
 </header>
 
 <main class="container">
+
+  <div class="linha-top">
+    <p style="font-size:0.85rem;color:#555;">
+      Site oficial do <strong>Crochê da Zeni</strong> – peças artesanais, rifas transparentes e contato direto pelo WhatsApp.
+    </p>
+    <div>
+      <button id="btnAdmin" class="btn-admin-header">Área da Zeni (admin)</button>
+      <span id="indicadorAdmin" class="admin-indicador">Modo administradora ativo</span>
+    </div>
+  </div>
+
   <!-- HERO -->
   <section id="hero">
     <div id="hero-text">
-      <span class="badge">Crochê feito por uma mulher guerreira</span>
-      <h2>Arte em crochê que carrega carinho e história</h2>
-      <p>No Crochê da Zeni, cada ponto é feito com amor, paciência e fé. Tapetes, caminhos de mesa e peças especiais que deixam qualquer lar mais acolhedor.</p>
-      <p>Veja as peças disponíveis, participe das rifas e apoie o trabalho de uma artesã que não desiste dos seus sonhos.</p>
-      <a href="#catalogo" class="btn-primary">Ver catálogo</a>
+      <span class="badge">Mulher guerreira, arte em cada ponto</span>
+      <h2>Crochê que aquece a casa e o coração</h2>
+      <p>No Crochê da Zeni, cada peça é feita com carinho, paciência e fé. Tapetes, caminhos de mesa e criações únicas para deixar qualquer ambiente mais acolhedor.</p>
+      <p>Veja o catálogo, participe das rifas e apoie o trabalho de uma artesã que transforma linha em história.</p>
+
+      <a href="#catalogo" class="btn-primary">Ver catálogo de peças</a>
       <a href="#rifas" class="btn-secondary">Participar da rifa</a>
+
+      <div class="destaque-info">
+        <div class="pill">🧵 Peças artesanais exclusivas</div>
+        <div class="pill">🎟 Rifas com transparência</div>
+        <div class="pill">💬 Contato direto pelo WhatsApp</div>
+      </div>
     </div>
+
     <div id="hero-img">
       <img src="https://images.pexels.com/photos/3945632/pexels-photo-3945632.jpeg"
            alt="Mulher fazendo crochê com barbantes coloridos">
-      <p>Imagem ilustrativa – você pode colocar aqui uma foto da Zeni ou do cantinho do crochê.</p>
+      <p>Imagem ilustrativa – você pode trocar por uma foto da Zeni ou das peças de crochê.</p>
     </div>
   </section>
 
   <!-- CATÁLOGO -->
   <section id="catalogo">
-    <h3>Catálogo de Peças</h3>
+    <h3>🛒 Catálogo de Peças</h3>
     <p class="section-subtitle">
-      O catálogo começa vazio. Você pode ir cadastrando as peças prontas: tapetes, jogos de cozinha, caminhos de mesa, etc.
+      Aqui você encontra as peças prontas de crochê: tapetes, caminhos de mesa, jogos de cozinha e muito mais.
     </p>
 
-    <div class="form-block">
-      <h4 id="tituloFormCatalogo">Adicionar nova peça ao catálogo</h4>
-      <form id="formCatalogo">
-        <div class="form-grid">
-          <div>
-            <label for="nomePeca">Nome da peça</label>
-            <input type="text" id="nomePeca" placeholder="Ex.: Tapete Oval Floral" required>
+    <div class="caixa-section">
+      <div class="form-block admin-only">
+        <h4><span>✏️</span> Gerenciar catálogo (Zeni)</h4>
+        <p style="font-size:0.85rem;color:#777;margin-bottom:0.5rem;">
+          Esta área é exclusiva para a Zeni cadastrar, editar ou excluir peças. Os clientes só visualizam o catálogo pronto.
+        </p>
+        <form id="formCatalogo">
+          <div class="form-grid">
+            <div>
+              <label for="nomePeca">Nome da peça</label>
+              <input type="text" id="nomePeca" placeholder="Ex.: Tapete Oval Floral" required>
+            </div>
+            <div>
+              <label for="descricaoPeca">Descrição</label>
+              <textarea id="descricaoPeca" placeholder="Tamanho, cores, detalhes..." required></textarea>
+            </div>
+            <div>
+              <label for="precoPeca">Preço (R$)</label>
+              <input type="number" id="precoPeca" min="0" step="0.01" placeholder="Ex.: 120,00" required>
+            </div>
+            <div>
+              <label for="imagemPeca">Link da imagem (URL)</label>
+              <input type="url" id="imagemPeca" placeholder="Cole aqui o link da foto da peça (opcional)">
+            </div>
+            <div>
+              <button type="submit" class="btn-small">Salvar peça</button>
+            </div>
           </div>
-          <div>
-            <label for="descricaoPeca">Descrição</label>
-            <textarea id="descricaoPeca" placeholder="Tamanho, cores, detalhes..." required></textarea>
-          </div>
-          <div>
-            <label for="precoPeca">Preço (R$)</label>
-            <input type="number" id="precoPeca" min="0" step="0.01" placeholder="Ex.: 120,00" required>
-          </div>
-          <div>
-            <label for="imagemPeca">Link da imagem (URL)</label>
-            <input type="url" id="imagemPeca" placeholder="Cole aqui o link da foto da peça (opcional)">
-          </div>
-          <div>
-            <button type="submit" class="btn-small">Salvar peça</button>
-          </div>
-        </div>
-      </form>
-      <p class="empty-msg" id="msgCatalogoVazio">Nenhuma peça cadastrada ainda. Preencha os campos acima e clique em “Salvar peça”.</p>
-    </div>
+        </form>
+        <p class="empty-msg" id="msgCatalogoVazio">Nenhuma peça cadastrada ainda. Quando a Zeni cadastrar, o catálogo aparecerá aqui para todos.</p>
+      </div>
 
-    <div class="grid" id="catalogoGrid"></div>
+      <div class="grid" id="catalogoGrid"></div>
+    </div>
   </section>
 
   <!-- RIFAS -->
   <section id="rifas">
-    <h3>Rifas de Crochê</h3>
+    <h3>🎟 Rifas de Crochê</h3>
     <p class="section-subtitle">
-      Aqui você cria as rifas: define o prêmio, o valor por número e acompanha os números escolhidos.
-      Os dados ficam salvos neste aparelho para facilitar o controle.
+      Participe das rifas oficiais do Crochê da Zeni. Escolha seus números, faça o Pix e envie o comprovante pelo WhatsApp.
     </p>
 
-    <div class="form-block">
-      <h4>Configurar rifa atual</h4>
-      <form id="formRifa">
+    <div class="caixa-section">
+      <div class="form-block admin-only">
+        <h4><span>⚙️</span> Configurar rifa atual (Zeni)</h4>
+        <p style="font-size:0.85rem;color:#777;margin-bottom:0.5rem;">
+          Aqui a Zeni define o prêmio e o valor por número. Os participantes só poderão escolher números depois disso.
+        </p>
+        <form id="formRifa">
+          <div class="form-grid">
+            <div>
+              <label for="premioRifa">Prêmio da rifa</label>
+              <input type="text" id="premioRifa" placeholder="Ex.: Tapete grande para sala" required>
+            </div>
+            <div>
+              <label for="valorNumeroRifa">Valor por número (R$)</label>
+              <input type="number" id="valorNumeroRifa" min="0" step="0.01" placeholder="Ex.: 3,00" required>
+            </div>
+            <div>
+              <button type="submit" class="btn-small">Salvar rifa</button>
+            </div>
+          </div>
+        </form>
+        <p class="empty-msg" id="msgRifaVazia">Ainda não há rifa configurada. Assim que a Zeni configurar, os números ficarão disponíveis.</p>
+      </div>
+
+      <div class="rifa-card" id="rifaCard" style="display:none;">
+        <div class="rifa-header">
+          <div class="rifa-info">
+            <p>Prêmio: <strong id="textoPremioRifa"></strong></p>
+            <p class="valor-rifa">Valor por número: <span id="valorPorNumero"></span></p>
+            <p style="font-size:0.85rem;color:#777;">Números disponíveis: 1 a 100</p>
+          </div>
+          <span class="badge-rifa">Rifa ativa – escolha seus números e confirme via Pix</span>
+        </div>
+
+        <!-- Dados do participante -->
         <div class="form-grid">
           <div>
-            <label for="premioRifa">Prêmio da rifa</label>
-            <input type="text" id="premioRifa" placeholder="Ex.: Tapete grande para sala" required>
+            <label for="nomeParticipante">Seu nome completo</label>
+            <input type="text" id="nomeParticipante" placeholder="Nome completo">
           </div>
           <div>
-            <label for="valorNumeroRifa">Valor por número (R$)</label>
-            <input type="number" id="valorNumeroRifa" min="0" step="0.01" placeholder="Ex.: 3,00" required>
-          </div>
-          <div>
-            <button type="submit" class="btn-small">Salvar rifa</button>
+            <label for="contatoParticipante">Telefone / WhatsApp</label>
+            <input type="text" id="contatoParticipante" placeholder="Ex.: (69) 9XXXX-XXXX">
           </div>
         </div>
-      </form>
-      <p class="empty-msg" id="msgRifaVazia">Ainda não há rifa configurada. Preencha os dados acima e clique em “Salvar rifa”.</p>
+
+        <div class="numeros-grid" id="numerosGrid"></div>
+
+        <p class="rifa-resumo">
+          Números selecionados: <strong id="numerosSelecionados">nenhum</strong>
+        </p>
+        <p class="rifa-resumo">
+          Total a pagar: <strong id="totalPagar">R$ 0,00</strong>
+        </p>
+
+        <button class="btn-primary" id="btnConfirmar">Confirmar escolha e registrar</button>
+
+        <div class="pix-box" id="pixBox" style="display:none;">
+          <p><strong>Faça o Pix para confirmar sua participação:</strong></p>
+          <p>Chave Pix (celular):</p>
+          <div class="pix-row">
+            <input type="text" id="chavePixInput" readonly>
+            <button type="button" class="btn-small" id="btnCopiarPix">Copiar Pix</button>
+          </div>
+          <p class="pix-label" id="pixNome"></p>
+          <p class="pix-label" id="pixBanco"></p>
+
+          <p style="margin-top:0.6rem;">
+            Valor: <span id="valorPixTexto"></span><br>
+            Números escolhidos: <span id="numerosPixTexto"></span>
+          </p>
+          <p style="margin-top:0.4rem;">
+            Depois de pagar o Pix, clique no botão abaixo para enviar o comprovante pelo WhatsApp.  
+            A mensagem já vai pronta, com seus números e o valor:
+          </p>
+          <a id="btnWhatsappComprovante"
+             href="#"
+             target="_blank"
+             class="btn-secondary"
+             style="margin-top:0.4rem; display:inline-block;">
+            Enviar comprovante no WhatsApp
+          </a>
+        </div>
+
+        <h4 style="margin-top:1.2rem;">Participantes desta rifa</h4>
+        <p class="empty-msg" id="msgSemParticipantes">Nenhum número vendido ainda.</p>
+        <table class="tabela-participantes">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Contato</th>
+              <th>Números</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaParticipantes"></tbody>
+        </table>
+      </div>
     </div>
+  </section>
 
-    <div class="rifa-card" id="rifaCard" style="display:none;">
-      <div class="rifa-header">
-        <div class="rifa-info">
-          <p>Prêmio: <span id="textoPremioRifa"></span></p>
-          <p class="valor-rifa">Valor por número: <span id="valorPorNumero"></span></p>
-          <p>Total de números: 1 a 100</p>
-        </div>
-      </div>
+  <!-- SORTEIO -->
+  <section id="sorteio">
+    <h3>🎰 Sorteio</h3>
+    <p class="section-subtitle">
+      Aqui acontece o sorteio oficial da rifa, sempre de forma aleatória e transparente. O número vencedor, o nome e o telefone do ganhador ficam visíveis para todos.
+    </p>
 
-      <!-- Dados do participante -->
-      <div class="form-grid">
-        <div>
-          <label for="nomeParticipante">Nome do participante</label>
-          <input type="text" id="nomeParticipante" placeholder="Nome completo">
-        </div>
-        <div>
-          <label for="contatoParticipante">Telefone / WhatsApp</label>
-          <input type="text" id="contatoParticipante" placeholder="Ex.: (69) 9XXXX-XXXX">
-        </div>
-      </div>
-
-      <div class="numeros-grid" id="numerosGrid"></div>
-
-      <p class="rifa-resumo">
-        Números selecionados: <strong id="numerosSelecionados">nenhum</strong>
-      </p>
-      <p class="rifa-resumo">
-        Total a pagar: <strong id="totalPagar">R$ 0,00</strong>
+    <div class="card-sorteio">
+      <p style="font-size:0.85rem;color:#777;">
+        O sorteio é realizado apenas pela Zeni, após a venda dos números. O sistema escolhe automaticamente um dos números vendidos.
       </p>
 
-      <button class="btn-primary" id="btnConfirmar">Confirmar escolha e registrar</button>
+      <button id="btnSortear" class="btn-primary admin-only" style="margin-top:0.7rem;">Sortear vencedor agora</button>
 
-      <div class="pix-box" id="pixBox" style="display:none;">
-        <p><strong>Faça o Pix para confirmar sua participação:</strong></p>
-        <p>Chave Pix (celular):</p>
-        <div class="pix-row">
-          <input type="text" id="chavePixInput" readonly>
-          <button type="button" class="btn-small" id="btnCopiarPix">Copiar Pix</button>
-        </div>
-        <p class="pix-label" id="pixNome"></p>
-        <p class="pix-label" id="pixBanco"></p>
-
-        <p style="margin-top:0.6rem;">
-          Valor: <span id="valorPixTexto"></span><br>
-          Números escolhidos: <span id="numerosPixTexto"></span>
-        </p>
-        <p style="margin-top:0.4rem;">
-          Depois de pagar o Pix, clique no botão abaixo para enviar o comprovante pelo WhatsApp.  
-          A mensagem já vai pronta, com seus números e o valor:
-        </p>
-        <a id="btnWhatsappComprovante"
-           href="#"
-           target="_blank"
-           class="btn-secondary"
-           style="margin-top:0.4rem; display:inline-block;">
-          Enviar comprovante no WhatsApp
-        </a>
+      <div class="resultado-sorteio" id="resultadoSorteioBox" style="display:none;">
+        <span class="badge-status" id="statusSorteio"></span>
+        <h4>Resultado do último sorteio</h4>
+        <p id="textoGanhador"></p>
+        <p id="textoNumero"></p>
+        <p id="textoData"></p>
       </div>
 
-      <h4 style="margin-top:1.2rem;">Participantes desta rifa</h4>
-      <p class="empty-msg" id="msgSemParticipantes">Nenhum número vendido ainda.</p>
-      <table class="tabela-participantes">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Contato</th>
-            <th>Números</th>
-          </tr>
-        </thead>
-        <tbody id="tabelaParticipantes"></tbody>
-      </table>
+      <p style="font-size:0.85rem;color:#777;margin-top:0.7rem;">
+        Números vendidos nesta rifa: <strong id="qtdNumerosVendidos">0</strong> – Participantes: <strong id="qtdParticipantes">0</strong>
+      </p>
     </div>
   </section>
 
   <!-- CONTATO -->
   <section id="contato">
-    <h3>Contato</h3>
+    <h3>📲 Contato</h3>
     <p class="section-subtitle">
       Quer encomendar uma peça exclusiva, tirar dúvidas sobre as rifas ou combinar um modelo especial?
     </p>
@@ -612,7 +863,7 @@
         Falar com a Zeni no WhatsApp
       </a>
     </p>
-    <p><strong>Mensagem automática:</strong><br>
+    <p><strong>Mensagem automática sugerida:</strong><br>
       “Olá, Zeni! Acessei o site Crochê da Zeni e gostaria de conversar sobre as peças de crochê e as rifas. Pode me ajudar?”
     </p>
   </section>
@@ -623,13 +874,50 @@
 </footer>
 
 <script>
-  // CONFIGURAÇÕES GERAIS
-  const whatsappBase = "5569993850180";
+  // ================== CONFIGURAÇÕES ==================
+  const ADMIN_PASSWORD = "crochezeni123"; // troque se quiser
+  const whatsappBase   = "5569993850180";
   const pixKey  = "69 99977-1852";
   const pixName = "Deivide Daniel Correia Ragnel";
   const pixBank = "Banco Mercado Pago";
 
-  // ===== CATÁLOGO =====
+  let isAdmin = false;
+
+  // ================== ÁREA ADMIN ==================
+  const btnAdmin = document.getElementById('btnAdmin');
+  const indicadorAdmin = document.getElementById('indicadorAdmin');
+
+  function atualizarVisibilidadeAdmin() {
+    const adminEls = document.querySelectorAll('.admin-only');
+    adminEls.forEach(el => {
+      el.style.display = isAdmin ? '' : 'none';
+    });
+    if (isAdmin) {
+      indicadorAdmin.classList.add('mostrar');
+      btnAdmin.textContent = "Sair do modo admin";
+    } else {
+      indicadorAdmin.classList.remove('mostrar');
+      btnAdmin.textContent = "Área da Zeni (admin)";
+    }
+  }
+
+  btnAdmin.addEventListener('click', () => {
+    if (isAdmin) {
+      isAdmin = false;
+      atualizarVisibilidadeAdmin();
+      return;
+    }
+    const senha = prompt("Digite a senha da Zeni:");
+    if (senha === ADMIN_PASSWORD) {
+      isAdmin = true;
+      atualizarVisibilidadeAdmin();
+      alert("Modo administradora ativado. Agora você pode gerenciar catálogo, rifa e sorteio.");
+    } else if (senha !== null) {
+      alert("Senha incorreta.");
+    }
+  });
+
+  // ================== CATÁLOGO ==================
   const formCatalogo = document.getElementById('formCatalogo');
   const catalogoGrid = document.getElementById('catalogoGrid');
   const msgCatalogoVazio = document.getElementById('msgCatalogoVazio');
@@ -680,12 +968,17 @@
       price.textContent = `R$ ${item.preco.toFixed(2).replace('.', ',')}`;
       card.appendChild(price);
 
+      const tag = document.createElement('span');
+      tag.textContent = "Peça disponível";
+      tag.className = "tag-disponivel";
+      card.appendChild(tag);
+
       const actions = document.createElement('div');
       actions.classList.add('card-actions');
 
       const btnEditar = document.createElement('button');
       btnEditar.textContent = "Editar";
-      btnEditar.className = "btn-small";
+      btnEditar.className = "btn-small admin-only";
       btnEditar.addEventListener('click', () => {
         indiceEdicao = index;
         tituloFormCatalogo.textContent = "Editar peça do catálogo";
@@ -699,7 +992,7 @@
 
       const btnExcluir = document.createElement('button');
       btnExcluir.textContent = "Excluir";
-      btnExcluir.className = "btn-danger";
+      btnExcluir.className = "btn-danger admin-only";
       btnExcluir.addEventListener('click', () => {
         if (confirm(`Você deseja mesmo excluir a peça "${item.nome}"?`)) {
           catalogo.splice(index, 1);
@@ -721,6 +1014,8 @@
       card.appendChild(actions);
       catalogoGrid.appendChild(card);
     });
+
+    atualizarVisibilidadeAdmin(); // reaplica visibilidade nos botões admin
   }
 
   formCatalogo.addEventListener('submit', (e) => {
@@ -752,7 +1047,7 @@
     formCatalogo.reset();
   });
 
-  // ===== RIFA =====
+  // ================== RIFA E PARTICIPANTES ==================
   const formRifa = document.getElementById('formRifa');
   const msgRifaVazia = document.getElementById('msgRifaVazia');
   const rifaCard = document.getElementById('rifaCard');
@@ -782,9 +1077,10 @@
   let valorPorNumero = 0;
   const numerosReservados = new Set();
   let participantes = [];
+  const numerosSelecionados = new Set();
 
   function carregarRifa() {
-    const salvo = localStorage.getItem('rifaZeni');
+    const salvo = localStorage.getItem('rifaZeniConfig');
     if (salvo) {
       const rifa = JSON.parse(salvo);
       if (rifa && rifa.premio && rifa.valor) {
@@ -799,8 +1095,8 @@
     }
   }
 
-  function salvarRifa(premio, valor) {
-    localStorage.setItem('rifaZeni', JSON.stringify({ premio, valor }));
+  function salvarRifaConfig(premio, valor) {
+    localStorage.setItem('rifaZeniConfig', JSON.stringify({ premio, valor }));
   }
 
   function carregarParticipantes() {
@@ -819,15 +1115,16 @@
     participantes.forEach(p => {
       (p.numeros || []).forEach(n => numerosReservados.add(Number(n)));
     });
+    atualizarResumoSorteioInfo();
   }
 
   function renderParticipantes() {
     tabelaParticipantes.innerHTML = "";
     if (participantes.length === 0) {
       msgSemParticipantes.style.display = "block";
-      return;
+    } else {
+      msgSemParticipantes.style.display = "none";
     }
-    msgSemParticipantes.style.display = "none";
 
     participantes.forEach(p => {
       const tr = document.createElement('tr');
@@ -844,9 +1141,9 @@
       tr.appendChild(tdNumeros);
       tabelaParticipantes.appendChild(tr);
     });
-  }
 
-  const numerosSelecionados = new Set();
+    atualizarResumoSorteioInfo();
+  }
 
   function gerarBotoesRifa() {
     numerosGrid.innerHTML = "";
@@ -882,7 +1179,6 @@
   function atualizarResumoRifa() {
     const lista = Array.from(numerosSelecionados).sort((a, b) => a - b);
     spanNumerosSelecionados.textContent = lista.length ? lista.join(', ') : 'nenhum';
-
     const total = lista.length * valorPorNumero;
     spanTotalPagar.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
   }
@@ -906,13 +1202,13 @@
     msgRifaVazia.style.display = "none";
     rifaCard.style.display = "block";
 
-    salvarRifa(premio, valor);
+    salvarRifaConfig(premio, valor);
     atualizarResumoRifa();
   });
 
   btnConfirmar.addEventListener('click', () => {
     if (valorPorNumero <= 0) {
-      alert('Antes de tudo, configure o prêmio e o valor da rifa.');
+      alert('Antes de tudo, a Zeni precisa configurar o prêmio e o valor da rifa.');
       return;
     }
     if (numerosSelecionados.size === 0) {
@@ -924,7 +1220,7 @@
     const contato = inputContatoParticipante.value.trim();
 
     if (!nome || !contato) {
-      alert('Preencha nome e telefone/WhatsApp do participante.');
+      alert('Preencha seu nome e telefone/WhatsApp.');
       return;
     }
 
@@ -942,7 +1238,7 @@
     // marca números como reservados
     lista.forEach(n => numerosReservados.add(n));
 
-    // atualiza grade e clean seleção
+    // atualiza grade e limpa seleção
     numerosSelecionados.clear();
     gerarBotoesRifa();
     atualizarResumoRifa();
@@ -958,18 +1254,18 @@
       `Nome: ${nome}%0A` +
       `Contato: ${contato}%0A` +
       `Números escolhidos: ${lista.join(', ')}%0A` +
-      `Valor pago: R$ ${total.toFixed(2).replace('.', ',')}%0A` +
+      `Valor a pagar/pago: R$ ${total.toFixed(2).replace('.', ',')}%0A` +
       `Fiz o Pix para a chave ${pixKey} (${pixName}, ${pixBank}).%0A` +
       `Por favor, confira e confirme meus números. Obrigado(a)!`;
 
     btnWhatsappComprovante.href = `https://wa.me/${whatsappBase}?text=${mensagem}`;
 
-    // limpa campos de nome/contato
+    // limpa campos
     inputNomeParticipante.value = "";
     inputContatoParticipante.value = "";
   });
 
-  // Botão de copiar Pix
+  // Copiar Pix
   btnCopiarPix.addEventListener('click', () => {
     const texto = chavePixInput.value;
     function ok() {
@@ -989,19 +1285,90 @@
     }
   });
 
-  // Ano no rodapé + preenchimento dos dados de Pix
+  // ================== SORTEIO ==================
+  const btnSortear = document.getElementById('btnSortear');
+  const resultadoSorteioBox = document.getElementById('resultadoSorteioBox');
+  const statusSorteio = document.getElementById('statusSorteio');
+  const textoGanhador = document.getElementById('textoGanhador');
+  const textoNumero = document.getElementById('textoNumero');
+  const textoData = document.getElementById('textoData');
+  const spanQtdNumeros = document.getElementById('qtdNumerosVendidos');
+  const spanQtdParticipantes = document.getElementById('qtdParticipantes');
+
+  function atualizarResumoSorteioInfo() {
+    let totalNumeros = 0;
+    participantes.forEach(p => {
+      totalNumeros += (p.numeros || []).length;
+    });
+    spanQtdNumeros.textContent = totalNumeros;
+    spanQtdParticipantes.textContent = participantes.length;
+  }
+
+  function carregarResultadoSorteio() {
+    const salvo = localStorage.getItem('rifaZeniResultado');
+    if (!salvo) {
+      resultadoSorteioBox.style.display = "none";
+      return;
+    }
+    const res = JSON.parse(salvo);
+    mostrarResultadoSorteio(res);
+  }
+
+  function mostrarResultadoSorteio(res) {
+    resultadoSorteioBox.style.display = "block";
+    statusSorteio.textContent = "Último sorteio registrado";
+    const hora = new Date(res.data);
+    textoGanhador.textContent = `Ganhador(a): ${res.nome} – Telefone/WhatsApp: ${res.contato}`;
+    textoNumero.textContent = `Número sorteado: ${res.numero}`;
+    textoData.textContent = `Data e hora do sorteio: ${hora.toLocaleString('pt-BR')}`;
+  }
+
+  btnSortear.addEventListener('click', () => {
+    if (!isAdmin) {
+      alert("Apenas a Zeni (admin) pode realizar o sorteio.");
+      return;
+    }
+    let todos = [];
+    participantes.forEach(p => {
+      (p.numeros || []).forEach(n => {
+        todos.push({ numero: n, nome: p.nome, contato: p.contato });
+      });
+    });
+    if (todos.length === 0) {
+      alert("Não há números vendidos para sortear.");
+      return;
+    }
+    if (!confirm("Confirmar sorteio agora? Esta ação será registrada.")) return;
+
+    const idx = Math.floor(Math.random() * todos.length);
+    const vencedor = todos[idx];
+    const resultado = {
+      numero: vencedor.numero,
+      nome: vencedor.nome,
+      contato: vencedor.contato,
+      data: new Date().toISOString()
+    };
+    localStorage.setItem('rifaZeniResultado', JSON.stringify(resultado));
+    mostrarResultadoSorteio(resultado);
+    alert(`Número sorteado: ${vencedor.numero} – ${vencedor.nome}`);
+  });
+
+  // ================== INICIALIZAÇÃO ==================
   document.getElementById('anoAtual').textContent = new Date().getFullYear();
   chavePixInput.value = pixKey;
   pixNome.textContent  = `Favorecido: ${pixName}`;
   pixBanco.textContent = `Banco: ${pixBank}`;
 
-  // Inicialização
   carregarCatalogo();
   carregarRifa();
   carregarParticipantes();
   gerarBotoesRifa();
+  carregarResultadoSorteio();
+  atualizarVisibilidadeAdmin();
 </script>
 
 </body>
 </html>
+
+
 
